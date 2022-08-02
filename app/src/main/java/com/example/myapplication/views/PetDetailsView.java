@@ -2,6 +2,7 @@ package com.example.myapplication.views;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class PetDetailsView extends AppCompatActivity {
     private ImageView PetDetailImage;
     private TextView PetDetailTextView;
     private  TextView PetDetailContentView;
+    private TextView NotAccessibleTextView;
     private PetDetailsViewModel ViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class PetDetailsView extends AppCompatActivity {
         PetDetailTextView = findViewById(R.id.petDetailsNameView);
         PetDetailContentView = findViewById(R.id.petDetailsContentView);
         ViewModel = new ViewModelProvider(this).get(PetDetailsViewModel.class);
+        ViewModel.checkWorkingHour(this.getApplicationContext());
         GetPetDetails();
         ObserverViewModel();
     }
@@ -37,25 +40,46 @@ public class PetDetailsView extends AppCompatActivity {
         ViewModel.PetContent.observe(this, petContent -> {
             if(petContent != null)
             {
-                PetDetailContentView.setText(petContent);
+                if(Boolean.TRUE.equals(ViewModel.isWorkingHour.getValue()))
+                {
+                    PetDetailContentView.setText(petContent);
+                }
+                else
+                {
+                    NotAccessibleTextView.setVisibility(View.VISIBLE);
+                }
             }
         });
 
         ViewModel.PetImage.observe(this, petContentImage -> {
-            if(petContentImage != null)
-            {
-                Picasso.get().load(Uri.parse(petContentImage)).into(PetDetailImage);
+            if(petContentImage != null) {
+                if (Boolean.TRUE.equals(ViewModel.isWorkingHour.getValue())) {
+
+                    Picasso.get().load(Uri.parse(petContentImage)).into(PetDetailImage);
+                } else {
+                    NotAccessibleTextView.setVisibility(View.VISIBLE);
+                }
             }
         });
 
         ViewModel.PetName.observe(this, petName -> {
+
             if (petName != null)
             {
-                PetDetailTextView.setText(ViewModel.PetName.getValue());
+                if (Boolean.TRUE.equals(ViewModel.isWorkingHour.getValue())) {
+
+                    PetDetailTextView.setText(ViewModel.PetName.getValue());
+                } else {
+                    NotAccessibleTextView.setVisibility(View.VISIBLE);
+                }
             }
         });
 
         ViewModel.isLoading.observe(this, IsLoadingStatus -> {
+        });
+
+        ViewModel.isWorkingHour.observe(this, IsWorkingHour -> {
+            NotAccessibleTextView.setVisibility(IsWorkingHour ? View.GONE : View.VISIBLE);
         });
     }
 

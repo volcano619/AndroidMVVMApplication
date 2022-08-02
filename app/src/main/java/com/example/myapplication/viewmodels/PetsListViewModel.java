@@ -3,7 +3,6 @@ package com.example.myapplication.viewmodels;
 import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.myapplication.R;
 import com.example.myapplication.models.Pet;
@@ -17,7 +16,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
 
-public class PetsListViewModel extends ViewModel {
+public class PetsListViewModel extends BaseViewModel {
     public MutableLiveData<List<Pet>> Pets = new MutableLiveData<>();
     public MutableLiveData<Boolean> petsLoadError = new MutableLiveData<>();
     public MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
@@ -27,6 +26,7 @@ public class PetsListViewModel extends ViewModel {
     }
 
     public void fetchPets(Context ctx) {
+        checkWorkingHour(ctx);
         isLoading.setValue(true);
         try {
             InputStream result = ctx.getResources().openRawResource(R.raw.pets);

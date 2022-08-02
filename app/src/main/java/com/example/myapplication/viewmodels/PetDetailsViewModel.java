@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.myapplication.models.Pet;
 
@@ -15,7 +14,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
-public class PetDetailsViewModel extends ViewModel {
+public class PetDetailsViewModel extends BaseViewModel {
 
     public MutableLiveData<String> PetImage = new MutableLiveData<>();
     public MutableLiveData<String> PetName = new MutableLiveData<>();

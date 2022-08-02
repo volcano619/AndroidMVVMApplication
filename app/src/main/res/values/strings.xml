@@ -2,5 +2,5 @@
     <string name="app_name">MyApplication</string>
     <string name="noDataFound">Sorry, no data found</string>
     <string name="petContentDesc">This is the Pet Image</string>
-    <string name="notAllowedText">The app is not allowed to use</string>
+    <string name="notAllowedText">The app is inaccessible right now</string>
 </resources>

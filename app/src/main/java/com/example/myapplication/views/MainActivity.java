@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView PetsRecyclerView;
     private ProgressBar PetsLoaderProgressView;
     private TextView NoDataFoundTextView;
+    private TextView NotAccessibleTextView;
     private PetsListViewModel ViewModel;
     private final PetsListAdapter PetsListAdapter = new PetsListAdapter(new ArrayList<>());
     @Override
@@ -33,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
         PetsRecyclerView = findViewById(R.id.recyclerView);
         PetsLoaderProgressView = findViewById(R.id.progressBar);
         NoDataFoundTextView = findViewById(R.id.textView);
+        NotAccessibleTextView = findViewById(R.id.notAllowedTextView);
         ViewModel = new ViewModelProvider(this).get(PetsListViewModel.class);
+        ViewModel.checkWorkingHour(this.getApplicationContext());
         ViewModel.refresh(getApplicationContext());
         PetsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         PetsRecyclerView.setAdapter(PetsListAdapter);
@@ -45,27 +48,51 @@ public class MainActivity extends AppCompatActivity {
         ViewModel.Pets.observe(this, petsList -> {
             if(petsList != null)
             {
-                PetsRecyclerView.setVisibility(View.VISIBLE);
-                PetsListAdapter.updatePetsList(petsList);
+                if(Boolean.TRUE.equals(ViewModel.isWorkingHour.getValue()))
+                {
+                    PetsRecyclerView.setVisibility(View.VISIBLE);
+                    PetsListAdapter.updatePetsList(petsList);
+                }
+                else
+                {
+                    NotAccessibleTextView.setVisibility(View.VISIBLE);
+                }
             }
         });
 
         ViewModel.petsLoadError.observe(this, petsLoadError -> {
             if (petsLoadError != null)
             {
-                NoDataFoundTextView.setVisibility(petsLoadError ? View.VISIBLE : View.GONE);
+                if(Boolean.TRUE.equals(ViewModel.isWorkingHour.getValue()))
+                {
+                    NoDataFoundTextView.setVisibility(petsLoadError ? View.VISIBLE : View.GONE);
+                }
+                else
+                {
+                    NotAccessibleTextView.setVisibility(View.VISIBLE);
+                }
             }
+
         });
 
         ViewModel.isLoading.observe(this, IsLoadingStatus -> {
-            if(IsLoadingStatus)
+            if(Boolean.TRUE.equals(ViewModel.isWorkingHour.getValue()))
             {
-                PetsLoaderProgressView.setVisibility(View.VISIBLE);
+                if(IsLoadingStatus)
+                {
+                    PetsLoaderProgressView.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    PetsLoaderProgressView.setVisibility(View.INVISIBLE);
+                }
             }
             else
             {
-              PetsLoaderProgressView.setVisibility(View.INVISIBLE);
+                NotAccessibleTextView.setVisibility(View.VISIBLE);
             }
         });
+
+        ViewModel.isWorkingHour.observe(this, IsWorkingHour -> NotAccessibleTextView.setVisibility(IsWorkingHour ? View.GONE : View.VISIBLE));
     }
 }
