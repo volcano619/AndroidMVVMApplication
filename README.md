@@ -11,12 +11,12 @@ The properties in the viewmodel are made MutableLive, so that they can help the 
 
 This is especially useful when we have to check the working hours of the application, as a background thread can update the value, depending upon the change the ui would be notififed and we restrict the access to the applications
 
-Things to Note:
+# Things to Note:
 
-Handling of working hours was done at the last moment, i believe there might be a more effecient way to it.
-ViewBinding can be used in recyclerview, i was trying with butter knife.
-Dependency Injection could have been used by creating a service for checking working hours, deserializing pet list data and get the content description for the pets.
-Additional effort can be put in the UI
+# Handling of working hours was done at the last moment, i believe there might be a more effecient way to it.
+# ViewBinding can be used in recyclerview, i was trying with butter knife.
+# Dependency Injection could have been used by creating a service for checking working hours, deserializing pet list data and get the content description for the pets.
+# Additional effort can be put in the UI
 
 
 
