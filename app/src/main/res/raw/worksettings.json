@@ -1,0 +1,7 @@
+{
+  "settings": {
+    "startWorkHours": "9:00",
+    "endWorkHours": "18:00",
+    "onlyWeekDays": ""
+  }
+}
