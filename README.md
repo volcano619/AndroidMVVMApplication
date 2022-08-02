@@ -1,7 +1,7 @@
 # AndroidMVVMApplication
 An Android Application Demonstrating MVVM pattern
 
-This application contains a recyclerview which shows the list of pets, and upon clicking on one of the views, it fetches the details about the pet. It focuses on MVVM pattern used rather than the UI.
+This application contains a recyclerview which shows the list of pets, and upon clicking on one of the views, it fetches the details about the pet. It focuses on MVVM pattern used.
 
 The data is being fetched locally from a json in the application, which is placed in the resources directory, I have used GSON to deserialize the data, but for the details of each item, here specifically the description of the pet, there is a background task used to fetch the information from url provided in JSON.
 
@@ -16,6 +16,7 @@ Things to Note:
 Handling of working hours was done at the last moment, i believe there might be a more effecient way to it.
 ViewBinding can be used in recyclerview, i was trying with butter knife.
 Dependency Injection could have been used by creating a service for checking working hours, deserializing pet list data and get the content description for the pets.
+Additional effort can be put in the UI
 
 
 
