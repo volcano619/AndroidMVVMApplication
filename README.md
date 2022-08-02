@@ -14,6 +14,10 @@ This is especially useful when we have to check the working hours of the applica
 Things to Note:
 
 Handling of working hours was done at the last moment, i believe there might be a more effecient way to it.
+ViewBinding can be used in recyclerview, i was trying with butter knife.
+Dependency Injection could have been used by creating a service for checking working hours, deserializing pet list data and get the content description for the pets.
+
+
 
 
 
